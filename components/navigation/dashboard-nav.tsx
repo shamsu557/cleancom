@@ -2,8 +2,20 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, LogOut, Settings, User, Home, Calendar, ShoppingBag, Briefcase, BarChart3 } from "lucide-react"
+import {
+  Menu,
+  X,
+  LogOut,
+  Settings,
+  User,
+  Home,
+  Calendar,
+  ShoppingBag,
+  Briefcase,
+  BarChart3,
+} from "lucide-react"
 
 const navigationByRole = {
   customer: [
@@ -43,15 +55,21 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* ================= Desktop Sidebar ================= */}
       <aside className="hidden lg:flex flex-col fixed left-0 top-0 w-64 h-screen bg-primary text-white border-r border-primary-light shadow-lg">
         {/* Logo */}
-        <Link href={`/dashboard/${role}`} className="p-6 border-b border-primary-light flex items-center gap-2">
-          <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center font-bold">C</div>
-          <div>
-            <div className="font-bold text-white">Clean</div>
-            <div className="text-xs text-primary-light">com</div>
-          </div>
+        <Link
+          href={`/dashboard/${role}`}
+          className="p-6 border-b border-primary-light flex items-center"
+        >
+          <Image
+            src="/cleancom logo2-06.jpg"
+            alt="Cleancom Logo"
+            width={150}
+            height={40}
+            className="h-10 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Navigation */}
@@ -60,6 +78,7 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
             {navigation.map((item) => {
               const Icon = item.icon
               const isActive = pathname === item.href
+
               return (
                 <li key={item.href}>
                   <Link
@@ -86,10 +105,13 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
               {userName.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">{userName}</p>
+              <p className="text-sm font-semibold text-white truncate">
+                {userName}
+              </p>
               <p className="text-xs text-white/70 capitalize">{role}</p>
             </div>
           </div>
+
           <button className="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-white/70 hover:text-white hover:bg-primary-light/20 transition-colors text-sm">
             <LogOut size={18} />
             Sign Out
@@ -97,13 +119,20 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
         </div>
       </aside>
 
-      {/* Mobile Header */}
+      {/* ================= Mobile Header ================= */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-primary text-white border-b border-primary-light shadow-sm">
         <div className="flex items-center justify-between h-16 px-4">
-          <Link href={`/dashboard/${role}`} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-accent rounded flex items-center justify-center font-bold text-xs">C</div>
-            <span className="font-bold">Cleancom</span>
+          <Link href={`/dashboard/${role}`} className="flex items-center">
+            <Image
+              src="/cleancom logo2-06.jpg"
+              alt="Cleancom Logo"
+              width={120}
+              height={32}
+              className="h-8 w-auto object-contain"
+              priority
+            />
           </Link>
+
           <button onClick={() => setIsOpen(!isOpen)} className="p-2">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -116,13 +145,16 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
               {navigation.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
+
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center gap-3 px-4 py-3 transition-colors ${
-                        isActive ? "bg-primary text-white font-semibold" : "text-white/80 hover:bg-primary/50"
+                        isActive
+                          ? "bg-primary text-white font-semibold"
+                          : "text-white/80 hover:bg-primary/50"
                       }`}
                     >
                       <Icon size={20} />
@@ -131,6 +163,7 @@ export function DashboardNav({ role, userName = "User" }: DashboardNavProps) {
                   </li>
                 )
               })}
+
               <li>
                 <button className="w-full text-left flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-primary/50">
                   <LogOut size={20} />
